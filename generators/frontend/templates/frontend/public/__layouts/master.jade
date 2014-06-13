@@ -1,0 +1,31 @@
+- String.prototype.toSlug = function () { return this.toLowerCase().replace(/([^a-z0-9]+)/gim, '-'); }
+- String.prototype.toTemplateClass = function () { return 'template-' + this.toSlug(); };
+
+!!!
+head
+	title #{ titlePrefix + title + titleSuffix }
+
+	each size,index in [57, 72, 114, 144]
+		link(rel="apple-touch-icon-precomposed", href="/images/favicon/favicon-#{size}x#{size}.png", sizes=index ? "#{size}x#{size}" : null)
+
+	each rel in ["icon", "shortcut icon"]
+		link(href="/favicon.ico", type="image/x-icon", rel="#{rel}")
+
+	meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+	if meta
+		if meta.description
+			meta(name="description", content="#{meta.description}")
+		if meta.keywords
+			meta(name="keywords", content="#{meta.keywords}")
+
+	link(rel="stylesheet", href="/css/app.css")
+	script(src="/js/app.min.js")
+	block head
+
+body(class=current.source.toTemplateClass())
+	article
+		header
+		section
+			block content
+		footer

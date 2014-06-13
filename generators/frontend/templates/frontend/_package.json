@@ -1,0 +1,32 @@
+{
+	"name": "<%= _.slugify(options.projectName) %>",
+	"version": "0.0.1",
+	"description": "Website for <%= options.projectDomain %>",
+	"author": "",
+	"license": "MIT",
+	"dependencies": {
+		"jquery-browser": "*",
+		"lodash": "*",
+		"rhythm.framework": "*"
+	},
+	"devDependencies": {
+		"grunt": "*",
+		"grunt-contrib-cssmin": "*",
+		"grunt-contrib-jade": "*",
+		"grunt-contrib-less": "*",
+		"grunt-contrib-sass": "*",
+		"grunt-contrib-uglify": "*",
+		"grunt-contrib-watch": "*",
+		"grunt-browserify": "*",
+		"grunt-concurrent": "*",
+		"grunt-cssc": "*",
+		"grunt-surround": "*",
+		"grunt-text-replace": "*",
+		"browserify": "*",
+		"matchdep": "*"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:rhythmagency/<%= options.projectDomain %>.git"
+	}
+}

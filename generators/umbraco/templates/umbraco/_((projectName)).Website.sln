@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{<%= options.uuids.website.solution %>}") = "<%= options.projectName %>.Website", "http://localhost:<%= options.port %>", "{<%= options.uuids.website.project %>}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		ProjectReferences = "{<%= options.uuids.extensions.project %>}|<%= options.projectName %>.Extensions.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_<%= options.port %>"
+		Debug.AspNetCompiler.PhysicalPath = "<%= options.projectName %>.Website\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_<%= options.port %>\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_<%= options.port %>"
+		Release.AspNetCompiler.PhysicalPath = "<%= options.projectName %>.Website\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_<%= options.port %>\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "<%= options.projectName %>.Website\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{<%= options.uuids.extensions.solution %>}") = "<%= options.projectName %>.Extensions", "<%= options.projectName %>.Extensions\<%= options.projectName %>.Extensions.csproj", "{<%= options.uuids.extensions.project %>}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{<%= options.uuids.website.project %>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<%= options.uuids.website.project %>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<%= options.uuids.website.project %>}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{<%= options.uuids.website.project %>}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{<%= options.uuids.extensions.project %>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<%= options.uuids.extensions.project %>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<%= options.uuids.extensions.project %>}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{<%= options.uuids.extensions.project %>}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
