@@ -5,12 +5,24 @@
 	"author": "<%= options.fullName %> <<%= options.email %>>",
 	"license": "MIT",
 	"dependencies": {
+		"keystone": "*",
+		"async": "*",
+		"dotenv": "*",
 		"jquery-browser": "*",
 		"lodash": "*",
+		"underscore": "*",
 		"rhythm.framework": "*"
 	},
 	"devDependencies": {
 		"grunt": "*",
+		"grunt-express-server": "*",
+		"grunt-contrib-jshint": "*",
+		"jshint-stylish": "*",
+		"load-grunt-tasks": "*",
+		"grunt-node-inspector": "*",
+		"time-grunt": "*",
+		"grunt-nodemon": "*",
+		"open": "*",
 		"grunt-contrib-jade": "*",
 		"grunt-contrib-uglify": "*",
 		"grunt-contrib-watch": "*",
@@ -19,14 +31,16 @@
 		"grunt-surround": "*",
 		"grunt-text-replace": "*",
 		"browserify": "*",
-		"matchdep": "*"
+		"matchdep": "*",
+		"node-sass": "*"
 	},
+
 	"engines": {
 		"node": ">=0.10.22",
 		"npm": ">=1.3.14"
 	},
 	"scripts": {
-		"start": "harp server"
+		"start": "node keystone.js"
 	},
 	"repository": {
 		"type": "git",

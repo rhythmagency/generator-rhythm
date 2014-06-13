@@ -1,25 +1,39 @@
 'use strict';
 
-var util = require('util'),
+var RhythmKeystoneGenerator,
+	util = require('util'),
 	path = require('path'),
 	yeoman = require('yeoman-generator'),
+	utils = require('../../lib/utils');
 
-	RhythmKeystoneGenerator = function (args, options) {
-		yeoman.generators.Base.apply(this, arguments);
+/**
+ * Generator for creating an Keystone.js project.
+ *
+ * @param args The command line arguments passed to the generator.
+ * @param options The options passed to the generator.
+ * @constructor
+ */
+RhythmKeystoneGenerator = function (args, options) {
+	yeoman.generators.Base.apply(this, arguments);
 
-		this.options = options;
-	};
+	this.options = options;
+
+	this.keystoneWorkingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Keystone');
+};
 
 util.inherits(RhythmKeystoneGenerator, yeoman.generators.Base);
 
 RhythmKeystoneGenerator.prototype.install = function () {
-	this.dest.mkdir(path.join(this.options.projectDomain, 'trunk', this.options.projectName + '.Keystone'));
+	this._processDirectory('keystone', this.keystoneWorkingDirectory);
 };
 
-RhythmKeystoneGenerator.prototype.installDependencies = function () {
+RhythmKeystoneGenerator.prototype.installDeps = function () {
 	this.on('end', function () {
+		process.chdir(this.keystoneWorkingDirectory);
 		this.installDependencies();
 	});
 };
+
+RhythmKeystoneGenerator.prototype._processDirectory = utils.processDirectory;
 
 module.exports = RhythmKeystoneGenerator;

@@ -23,6 +23,24 @@ RhythmGenerator.prototype.promptUser = function () {
 	var prompts = [
 		{
 			'type': 'input',
+			'name': 'fullName',
+			'message': 'Enter your full name:',
+			'when': function () {
+				var name = self.config.get('fullName');
+				return !name;
+			}
+		},
+		{
+			'type': 'input',
+			'name': 'email',
+			'message': 'Enter your email address:',
+			'when': function () {
+				var email = self.config.get('email');
+				return !email;
+			}
+		},
+		{
+			'type': 'input',
 			'name': 'projectName',
 			'message': 'Enter the name of the project:'
 		},
@@ -96,14 +114,18 @@ RhythmGenerator.prototype.promptUser = function () {
 
 	this.prompt(prompts, function (props) {
 		this.props = props;
+		this.fullName = props.fullName || self.config.get('fullName');
+		this.email = props.email || self.config.get('email');
 		this.projectName = props.projectName;
 		this.projectDomain = props.projectDomain;
 		this.projectTypes = props.projectTypes;
 		this.useGit = props.useGit;
 		this.useBitbucket = props.useBitbucket;
-		this.bitbucketUser = props.bitbucketUser;
-		this.bitbucketPass = props.bitbucketPass;
+		this.bitbucketUser = props.bitbucketUser || self.config.get('bitbucketUser');
+		this.bitbucketPass = props.bitbucketPass || self.config.get('bitbucketPass');
 
+		self.config.set('fullName', this.fullName);
+		self.config.set('email', this.email);
 		self.config.set('bitbucketUser', this.bitbucketUser);
 		self.config.set('bitbucketPass', this.bitbucketPass);
 
