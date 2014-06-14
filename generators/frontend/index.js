@@ -18,7 +18,7 @@ RhythmFrontendGenerator = function (args, options) {
 
 	this.options = options;
 
-	this.frontendWorkingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Frontend');
+	this.workingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Frontend');
 	this.prototypeWorkingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.FrontendPrototype');
 };
 
@@ -43,7 +43,7 @@ RhythmFrontendGenerator.prototype.promptUser = function () {
 };
 
 RhythmFrontendGenerator.prototype.install = function () {
-	this._processDirectory('frontend', this.frontendWorkingDirectory);
+	this._processDirectory('frontend', this.workingDirectory);
 
 	if (this.options.createPrototype) {
 		this._processDirectory('frontend', this.prototypeWorkingDirectory);
@@ -52,7 +52,7 @@ RhythmFrontendGenerator.prototype.install = function () {
 
 RhythmFrontendGenerator.prototype.installDeps = function () {
 	this.on('end', function () {
-		process.chdir(this.frontendWorkingDirectory);
+		process.chdir(this.workingDirectory);
 		this.installDependencies();
 
 		if (this.options.createPrototype) {

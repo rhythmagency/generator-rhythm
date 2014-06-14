@@ -1,0 +1,30 @@
+{
+	"port": 3000,
+	"aws": {
+		"accessKeyId": "<%= options.awsAccessKeyId %>",
+		"secretKey": "<%= options.awsSecretKey %>"
+	},
+	"email": {
+		"to": "<%= options.email %>",
+		"from": "<%= options.email %>",
+		"subject": "This is a test!"
+	},
+	"locals": {
+		"normal": {
+			"name": {
+				"first": "<%= options.firstName %>",
+				"last": "<%= options.lastName %>"
+			},
+			"email": "<%= options.email %>",
+			"message": "This is a test!"
+		},
+		"exacttarget": {
+			"name": {
+				"first": "%%firstname%%",
+				"last": "%%lastname%%"
+			},
+			"email": "%%emailaddr%%",
+			"message": "%%message%%"
+		}
+	}
+}

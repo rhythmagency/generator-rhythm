@@ -35,15 +35,15 @@ RhythmUmbracoGenerator = function (args, options) {
 
 	this.umbracoVersion = '7.1.4';
 	this.umbracoDownloadLocation = 'http://our.umbraco.org/ReleaseDownload?id=125627';
-	this.umbracoWorkingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Umbraco');
-	this.umbracoWebsiteWorkingDirectory = path.join(this.umbracoWorkingDirectory, this.options.projectName + '.Website');
+	this.workingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Umbraco');
+	this.umbracoWebsiteWorkingDirectory = path.join(this.workingDirectory, this.options.projectName + '.Website');
 	this.umbracoDownloadLocationFile = path.join(this.umbracoWebsiteWorkingDirectory, path.basename(this.umbracoDownloadLocation));
 };
 
 util.inherits(RhythmUmbracoGenerator, yeoman.generators.Base);
 
 RhythmUmbracoGenerator.prototype.install = function () {
-	this._processDirectory('umbraco', this.umbracoWorkingDirectory);
+	this._processDirectory('umbraco', this.workingDirectory);
 };
 
 RhythmUmbracoGenerator.prototype.promptUser = function () {

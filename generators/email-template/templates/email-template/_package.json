@@ -1,0 +1,24 @@
+{
+	"name": "<%= _.slugify(options.projectName) %>",
+	"version": "0.0.1",
+	"description": "Email template for <%= options.projectName %>",
+	"author": "<%= options.fullName %> <<%= options.email %>>",
+	"license": "MIT",
+	"dependencies": {
+		"body-parser": "^1.2.2",
+		"email-templates": "^0.1.8",
+		"express": "^4.3.1",
+		"nodemailer": "^0.6.5"
+	},
+	"engines": {
+		"node": ">=0.10.x",
+		"npm": ">=1.3.14"
+	},
+	"scripts": {
+		"start": "node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:rhythmagency/<%= options.projectDomain %>.git"
+	}
+}

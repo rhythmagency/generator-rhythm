@@ -18,18 +18,18 @@ RhythmKeystoneGenerator = function (args, options) {
 
 	this.options = options;
 
-	this.keystoneWorkingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Keystone');
+	this.workingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Keystone');
 };
 
 util.inherits(RhythmKeystoneGenerator, yeoman.generators.Base);
 
 RhythmKeystoneGenerator.prototype.install = function () {
-	this._processDirectory('keystone', this.keystoneWorkingDirectory);
+	this._processDirectory('keystone', this.workingDirectory);
 };
 
 RhythmKeystoneGenerator.prototype.installDeps = function () {
 	this.on('end', function () {
-		process.chdir(this.keystoneWorkingDirectory);
+		process.chdir(this.workingDirectory);
 		this.installDependencies();
 	});
 };

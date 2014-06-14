@@ -23,10 +23,19 @@ RhythmGenerator.prototype.promptUser = function () {
 	var prompts = [
 		{
 			'type': 'input',
-			'name': 'fullName',
-			'message': 'Enter your full name:',
+			'name': 'firstName',
+			'message': 'Enter your first name:',
 			'when': function () {
-				var name = self.config.get('fullName');
+				var name = self.config.get('firstName');
+				return !name;
+			}
+		},
+		{
+			'type': 'input',
+			'name': 'lastName',
+			'message': 'Enter your last name:',
+			'when': function () {
+				var name = self.config.get('lastName');
 				return !name;
 			}
 		},
@@ -92,6 +101,17 @@ RhythmGenerator.prototype.promptUser = function () {
 		},
 		{
 			'type': 'input',
+			'name': 'bitbucketAccount',
+			'message': 'Enter your BitBucket account name (ie. rhythminteractive):',
+			'default': 'rhythminteractive',
+			'when': function (response) {
+				var bitbucketAccount = self.config.get('bitbucketAccount');
+
+				return response.useBitbucket && !bitbucketAccount;
+			}
+		},
+		{
+			'type': 'input',
 			'name': 'bitbucketUser',
 			'message': 'Enter your BitBucket user name:',
 			'when': function (response) {
@@ -113,44 +133,37 @@ RhythmGenerator.prototype.promptUser = function () {
 	];
 
 	this.prompt(prompts, function (props) {
-		this.props = props;
-		this.fullName = props.fullName || self.config.get('fullName');
-		this.email = props.email || self.config.get('email');
-		this.projectName = props.projectName;
-		this.projectDomain = props.projectDomain;
-		this.projectTypes = props.projectTypes;
-		this.useGit = props.useGit;
-		this.useBitbucket = props.useBitbucket;
-		this.bitbucketUser = props.bitbucketUser || self.config.get('bitbucketUser');
-		this.bitbucketPass = props.bitbucketPass || self.config.get('bitbucketPass');
+		self.options = _.merge(self.options || {}, props, true);
+		self.options.firstName = self.options.firstName || self.config.get('firstName');
+		self.options.lastName = self.options.lastName || self.config.get('lastName');
+		self.options.fullName = self.options.firstName + ' ' + self.options.lastName || self.config.get('fullName');
+		self.options.email = self.options.email || self.config.get('email');
+		self.options.bitbucketUser = self.options.bitbucketUser || self.config.get('bitbucketUser');
+		self.options.bitbucketPass = self.options.bitbucketPass || self.config.get('bitbucketPass');
+		self.options.bitbucketAccount = self.options.bitbucketAccount || self.config.get('bitbucketAccount');
 
-		self.config.set('fullName', this.fullName);
-		self.config.set('email', this.email);
-		self.config.set('bitbucketUser', this.bitbucketUser);
-		self.config.set('bitbucketPass', this.bitbucketPass);
+		self.config.set('firstName', self.options.firstName);
+		self.config.set('lastName', self.options.lastName);
+		self.config.set('fullName', self.options.fullName);
+		self.config.set('email', self.options.email);
+		self.config.set('bitbucketUser', self.options.bitbucketUser);
+		self.config.set('bitbucketPass', self.options.bitbucketPass);
+		self.config.set('bitbucketAccount', self.options.bitbucketAccount);
 
 		done();
 	}.bind(this));
 };
 
 RhythmGenerator.prototype.setupProjectStructure = function () {
-	this.dest.mkdir(this.projectDomain);
-	this.directory('docs', path.join(this.projectDomain, 'docs'));
-	this.dest.mkdir(path.join(this.projectDomain, 'trunk'));
+	this.dest.mkdir(this.options.projectDomain);
+	this.directory('docs', path.join(this.options.projectDomain, 'docs'));
+	this.dest.mkdir(path.join(this.options.projectDomain, 'trunk'));
 };
 
-RhythmGenerator.prototype.invokeGenerators = function () {
-	_.each(this.projectTypes, _.bind(function (projectType) {
-		this.invoke('rhythm:' + projectType, {'options': this.props});
+RhythmGenerator.prototype.invokeSubGenerators = function () {
+	_.each(this.options.projectTypes, _.bind(function (projectType) {
+		this.invoke('rhythm:' + projectType, {'options': this.options});
 	}, this));
-};
-
-RhythmGenerator.prototype.installDependencies = function () {
-	this.on('end', function () {
-		if (!this.options['skip-install']) {
-			this.installDependencies();
-		}
-	});
 };
 
 module.exports = RhythmGenerator;
