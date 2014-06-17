@@ -20,27 +20,13 @@ RhythmFrontendGenerator = function (args, options) {
 
 	this.workingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Frontend');
 	this.prototypeWorkingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.FrontendPrototype');
+
+	this.on('npmInstall:end', function () {
+		this.emit('complete');
+	}.bind(this));
 };
 
 util.inherits(RhythmFrontendGenerator, yeoman.generators.Base);
-
-RhythmFrontendGenerator.prototype.promptUser = function () {
-	var done = this.async(),
-		prompts = [
-			{
-				'type': 'confirm',
-				'name': 'createPrototype',
-				'message': 'Create a frontend prototype?',
-				'default': false
-			}
-		];
-
-	this.prompt(prompts, (function (props) {
-		this.options.createPrototype = props.createPrototype;
-
-		done();
-	}).bind(this));
-};
 
 RhythmFrontendGenerator.prototype.install = function () {
 	this._processDirectory('frontend', this.workingDirectory);
@@ -50,18 +36,19 @@ RhythmFrontendGenerator.prototype.install = function () {
 	}
 };
 
-RhythmFrontendGenerator.prototype.installDeps = function () {
-	this.on('end', function () {
-		process.chdir(this.workingDirectory);
-		this.installDependencies();
+RhythmFrontendGenerator.prototype.installFrontendDeps = function () {
+	process.chdir(this.workingDirectory);
+	this.installDependencies({'bower': false, 'npm': true});
+};
 
-		if (this.options.createPrototype) {
-			process.chdir(this.prototypeWorkingDirectory);
-			this.installDependencies();
-		}
-	});
+RhythmFrontendGenerator.prototype.installFrontendPrototypeDeps = function () {
+	if (this.options.createPrototype) {
+		process.chdir(this.prototypeWorkingDirectory);
+		this.installDependencies({'bower': false, 'npm': true});
+	}
 };
 
 RhythmFrontendGenerator.prototype._processDirectory = utils.processDirectory;
+RhythmFrontendGenerator.prototype._logError = utils.logError;
 
 module.exports = RhythmFrontendGenerator;

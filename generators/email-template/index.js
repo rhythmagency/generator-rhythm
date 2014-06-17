@@ -19,6 +19,10 @@ RhythmEmailTemplateGenerator = function (args, options) {
 	this.options = options;
 
 	this.workingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.EmailTemplate');
+
+	this.on('npmInstall:end', function () {
+		this.emit('complete');
+	});
 };
 
 util.inherits(RhythmEmailTemplateGenerator, yeoman.generators.Base);
@@ -72,5 +76,6 @@ RhythmEmailTemplateGenerator.prototype.installDeps = function () {
 };
 
 RhythmEmailTemplateGenerator.prototype._processDirectory = utils.processDirectory;
+RhythmEmailTemplateGenerator.prototype._logError = utils.logError;
 
 module.exports = RhythmEmailTemplateGenerator;

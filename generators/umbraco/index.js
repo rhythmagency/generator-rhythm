@@ -48,6 +48,7 @@ RhythmUmbracoGenerator.prototype.install = function () {
 
 RhythmUmbracoGenerator.prototype.promptUser = function () {
 	var done = this.async(),
+		self = this,
 		prompts = [
 			{
 				'type': 'confirm',
@@ -57,22 +58,22 @@ RhythmUmbracoGenerator.prototype.promptUser = function () {
 			}
 		];
 
-	this.prompt(prompts, (function (props) {
-		this.downloadUmbraco = props.downloadUmbraco;
+	self.prompt(prompts, function (props) {
+		self.downloadUmbraco = props.downloadUmbraco;
 
 		done();
-	}).bind(this));
+	});
 };
 
 RhythmUmbracoGenerator.prototype.downloadAndExtractUmbraco = function () {
-	var self = this;
-
-	this.log(this.umbracoDownloadLocationFile);
+	var done = this.async(),
+		self = this;
 
 	if (self.downloadUmbraco) {
 		self.fetch(self.umbracoDownloadLocation, self.umbracoWebsiteWorkingDirectory, function (err) {
 			if (err) {
-				self.log(JSON.stringify(err));
+				self._logError('Error downloading ' + self.umbracoDownloadLocation, err);
+				done();
 			} else {
 				fs
 					.createReadStream(self.umbracoDownloadLocationFile)
@@ -82,12 +83,18 @@ RhythmUmbracoGenerator.prototype.downloadAndExtractUmbraco = function () {
 					}))
 					.on('close', function () {
 						self.dest.delete(self.umbracoDownloadLocationFile);
+						done();
 					});
 			}
 		});
 	}
 };
 
+RhythmUmbracoGenerator.prototype.emitComplete = function () {
+	this.emit('complete');
+};
+
 RhythmUmbracoGenerator.prototype._processDirectory = utils.processDirectory;
+RhythmUmbracoGenerator.prototype._logError = utils.logError;
 
 module.exports = RhythmUmbracoGenerator;

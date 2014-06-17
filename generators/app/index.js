@@ -5,6 +5,8 @@ var util = require('util'),
 	yeoman = require('yeoman-generator'),
 	yosay = require('yosay'),
 	_ = require('lodash'),
+	Q = require('q'),
+	utils = require('../../lib/utils'),
 
 	RhythmGenerator = function (args, options) {
 		yeoman.generators.Base.apply(this, arguments);
@@ -86,6 +88,15 @@ RhythmGenerator.prototype.promptUser = function () {
 		},
 		{
 			'type': 'confirm',
+			'name': 'createPrototype',
+			'message': 'Create a frontend prototype?',
+			'default': false,
+			'when': function (response) {
+				return _.contains(response.projectTypes, 'frontend');
+			}
+		},
+		{
+			'type': 'confirm',
 			'name': 'useGit',
 			'message': 'Create a Git repository?',
 			'default': true
@@ -161,9 +172,37 @@ RhythmGenerator.prototype.setupProjectStructure = function () {
 };
 
 RhythmGenerator.prototype.invokeSubGenerators = function () {
-	_.each(this.options.projectTypes, _.bind(function (projectType) {
-		this.invoke('rhythm:' + projectType, {'options': this.options});
-	}, this));
+	var self = this,
+		done = this.async(),
+		fnInvokeGenerator = function (projectType) {
+			var deferred = Q.defer(),
+				generator = self.invoke('rhythm:' + projectType, {'options': self.options});
+
+			generator.on('complete', function () {
+				deferred.resolve();
+			});
+
+			return deferred.promise;
+		},
+		promises = _.map(self.options.projectTypes, function (projectType) {
+			return fnInvokeGenerator(projectType);
+		});
+
+	Q.all(promises)
+		.fail(function (err) {
+			self._logError(null, err);
+		})
+		.fin(function () {
+			done();
+		});
 };
+
+RhythmGenerator.prototype.initializeGit = function () {
+	if (this.options.useGit) {
+		this.invoke('rhythm:git', {'options': this.options});
+	}
+};
+
+RhythmGenerator.prototype._logError = utils.logError;
 
 module.exports = RhythmGenerator;

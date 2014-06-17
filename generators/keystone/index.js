@@ -17,8 +17,11 @@ RhythmKeystoneGenerator = function (args, options) {
 	yeoman.generators.Base.apply(this, arguments);
 
 	this.options = options;
-
 	this.workingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Keystone');
+
+	this.on('npmInstall:end', function () {
+		this.emit('complete');
+	}.bind(this));
 };
 
 util.inherits(RhythmKeystoneGenerator, yeoman.generators.Base);
@@ -30,10 +33,11 @@ RhythmKeystoneGenerator.prototype.install = function () {
 RhythmKeystoneGenerator.prototype.installDeps = function () {
 	this.on('end', function () {
 		process.chdir(this.workingDirectory);
-		this.installDependencies();
+		this.installDependencies({'bower': false, 'npm': true});
 	});
 };
 
 RhythmKeystoneGenerator.prototype._processDirectory = utils.processDirectory;
+RhythmKeystoneGenerator.prototype._logError = utils.logError;
 
 module.exports = RhythmKeystoneGenerator;
