@@ -93,6 +93,10 @@ RhythmGitGenerator.prototype.gitCheckoutDevelop = function () {
 	}.bind(this));
 };
 
+RhythmGitGenerator.prototype.emitComplete = function () {
+	this.emit('complete');
+};
+
 RhythmGitGenerator.prototype._logError = utils.logError;
 
 module.exports = RhythmGitGenerator;

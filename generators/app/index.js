@@ -197,9 +197,20 @@ RhythmGenerator.prototype.invokeSubGenerators = function () {
 		});
 };
 
-RhythmGenerator.prototype.initializeGit = function () {
+RhythmGenerator.prototype.invokeGit = function () {
 	if (this.options.useGit) {
-		this.invoke('rhythm:git', {'options': this.options});
+		var done = this.async(),
+			generator = this.invoke('rhythm:git', {'options': this.options});
+
+		generator.on('complete', function () {
+			done();
+		});
+	}
+};
+
+RhythmGenerator.prototype.invokeBitbucket = function () {
+	if (this.options.useBitbucket) {
+		this.invoke('rhythm:bitbucket', {'options': this.options});
 	}
 };
 
