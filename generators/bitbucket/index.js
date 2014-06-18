@@ -70,7 +70,6 @@ RhythmBitbucketGenerator.prototype.pushDevelop = utils.pushBranch('develop');
 RhythmBitbucketGenerator.prototype.pushFrontend = utils.pushBranch('feature/frontend');
 
 RhythmBitbucketGenerator.prototype.emitComplete = function () {
-	this.log('BITBUCKET COMPLETE');
 	this.emit('complete');
 };
 

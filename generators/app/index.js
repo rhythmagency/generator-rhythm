@@ -20,8 +20,6 @@ RhythmGenerator.prototype.promptUser = function () {
 	var done = this.async(),
 		self = this;
 
-	this.log(yosay('Welcome to the marvelous Rhythm generator!'));
-
 	var prompts = [
 		{
 			'type': 'input',
@@ -212,6 +210,10 @@ RhythmGenerator.prototype.invokeBitbucket = function () {
 	if (this.options.useBitbucket) {
 		this.invoke('rhythm:bitbucket', {'options': this.options});
 	}
+};
+
+RhythmGenerator.prototype.bingo = function () {
+	this.log(yosay('Bingo! Dino DNA!'));
 };
 
 RhythmGenerator.prototype._logError = utils.logError;
