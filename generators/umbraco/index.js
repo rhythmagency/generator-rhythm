@@ -42,6 +42,7 @@ RhythmUmbracoGenerator = function (args, options) {
 	this.umbracoWebsiteWorkingDirectory = path.join(this.workingDirectory, this.options.projectName + '.Website');
 	this.temporaryDirectory = os.tmpdir();
 	this.umbracoDownloadLocationFile = path.join(this.temporaryDirectory, this.umbracoFileName);
+	this.umbracoSolutionFile = path.join(this.workingDirectory, this.options.projectName + '.Website.sln');
 };
 
 util.inherits(RhythmUmbracoGenerator, yeoman.generators.Base);
@@ -70,6 +71,17 @@ RhythmUmbracoGenerator.prototype.promptUser = function () {
 
 		done();
 	});
+};
+
+RhythmUmbracoGenerator.prototype.replaceLineEndings = function () {
+	if (fs.existsSync(this.umbracoSolutionFile)) {
+		this.log('Replacing Umbraco solution line endings in ' + this.umbracoSolutionFile + '...');
+
+		var encoding = 'utf8',
+			contents = fs.readFileSync(this.umbracoSolutionFile, encoding).replace(/\r\n|\n/gim, '\r\n');
+
+		fs.writeFileSync(this.umbracoSolutionFile, contents, encoding);
+	}
 };
 
 RhythmUmbracoGenerator.prototype.downloadUmbracoFile = function () {
