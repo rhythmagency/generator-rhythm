@@ -75,10 +75,12 @@ RhythmUmbracoGenerator.prototype.promptUser = function () {
 	});
 };
 
+RhythmUmbracoGenerator.prototype._replaceLineEndings = utils.replaceLineEndings;
+
 RhythmUmbracoGenerator.prototype.replaceLineEndingsInFiles = function () {
-	utils.replaceLineEndings(this.umbracoSolutionFile);
-	utils.replaceLineEndings(this.umbracoExtensionsProjectFile);
-	utils.replaceLineEndings(this.umbracoExtensionsAssembylyInfoFile);
+	this._replaceLineEndings(this.umbracoSolutionFile);
+	this._replaceLineEndings(this.umbracoExtensionsProjectFile);
+	this._replaceLineEndings(this.umbracoExtensionsAssembylyInfoFile);
 };
 
 RhythmUmbracoGenerator.prototype.downloadUmbracoFile = function () {
