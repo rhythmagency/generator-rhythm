@@ -25,7 +25,7 @@ Project("{<%= options.uuids.website.solution %>}") = "<%= options.projectName %>
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{<%= options.uuids.extensions.solution %>}") = "<%= options.projectName %>.Extensions", "<%= options.projectName %>.Extensions\<%= options.projectName %>.Extensions.csproj", "{<%= options.uuids.extensions.project %>}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= options.projectName %>.Extensions", "<%= options.projectName %>.Extensions\<%= options.projectName %>.Extensions.csproj", "{<%= options.uuids.extensions.project %>}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
