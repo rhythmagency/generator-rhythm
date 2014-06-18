@@ -7,8 +7,8 @@
     <ProjectGuid><%= options.uuids.extensions.project %></ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RHYTHM.Extensions</RootNamespace>
-    <AssemblyName>RHYTHM.Extensions</AssemblyName>
+    <RootNamespace><%= options.projectName %>.Extensions</RootNamespace>
+    <AssemblyName><%= options.projectName %>.Extensions</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
