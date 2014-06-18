@@ -7,7 +7,8 @@ var RhythmUmbracoGenerator,
 	yeoman = require('yeoman-generator'),
 	utils = require('../../lib/utils'),
 	decompress = require('decompress'),
-	fs = require('fs');
+	fs = require('fs'),
+	os = require('os');
 
 /**
  * Generator for creating an Umbraco project.
@@ -34,10 +35,13 @@ RhythmUmbracoGenerator = function (args, options) {
 	};
 
 	this.umbracoVersion = '7.1.4';
-	this.umbracoDownloadLocation = 'http://our.umbraco.org/ReleaseDownload?id=125627';
+	// Append '&filename=/umbraco.zip' so that we can have the file named umbraco.zip instead of 'ReleaseDownload?id=125627'. Kind of a hack, but it works.
+	this.umbracoFileName = 'umbraco-' + this.umbracoVersion + '.zip';
+	this.umbracoDownloadLocation = 'http://our.umbraco.org/ReleaseDownload?id=125627&filename=/' + this.umbracoFileName;
 	this.workingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Umbraco');
 	this.umbracoWebsiteWorkingDirectory = path.join(this.workingDirectory, this.options.projectName + '.Website');
-	this.umbracoDownloadLocationFile = path.join(this.umbracoWebsiteWorkingDirectory, path.basename(this.umbracoDownloadLocation));
+	this.temporaryDirectory = os.tmpdir();
+	this.umbracoDownloadLocationFile = path.join(this.temporaryDirectory, this.umbracoFileName);
 };
 
 util.inherits(RhythmUmbracoGenerator, yeoman.generators.Base);
@@ -54,7 +58,10 @@ RhythmUmbracoGenerator.prototype.promptUser = function () {
 				'type': 'confirm',
 				'name': 'downloadUmbraco',
 				'message': 'Would you like to download and extract Umbraco v' + this.umbracoVersion + '?',
-				'default': true
+				'default': true,
+				'when': function (response) {
+					return !fs.existsSync(self.umbracoDownloadLocationFile);
+				}
 			}
 		];
 
@@ -65,32 +72,39 @@ RhythmUmbracoGenerator.prototype.promptUser = function () {
 	});
 };
 
-RhythmUmbracoGenerator.prototype.downloadAndExtractUmbraco = function () {
-	var done = this.async(),
-		self = this;
+RhythmUmbracoGenerator.prototype.downloadUmbracoFile = function () {
+	if (this.downloadUmbraco) {
+		var done = this.async(),
+			self = this;
 
-	if (self.downloadUmbraco) {
-		this.log('Downloading Umbraco v' + this.umbracoVersion + '...');
+		self.log('Downloading Umbraco v' + this.umbracoVersion + '...');
 
-		self.fetch(self.umbracoDownloadLocation, self.umbracoWebsiteWorkingDirectory, function (err) {
+		self.fetch(self.umbracoDownloadLocation, self.temporaryDirectory, function (err) {
 			if (err) {
 				self._logError('Error downloading ' + self.umbracoDownloadLocation, err);
-				done();
-			} else {
-				this.log('Extracting ' + self.umbracoDownloadLocationFile + '...');
-
-				fs
-					.createReadStream(self.umbracoDownloadLocationFile)
-					.pipe(decompress({
-						'ext': 'application/zip',
-						'path': self.umbracoWebsiteWorkingDirectory
-					}))
-					.on('close', function () {
-						self.dest.delete(self.umbracoDownloadLocationFile);
-						done();
-					});
 			}
+
+			done();
 		});
+	}
+};
+
+RhythmUmbracoGenerator.prototype.extractUmbracoFile = function () {
+	if (fs.existsSync(this.umbracoDownloadLocationFile)) {
+		var done = this.async(),
+			self = this;
+
+		self.log('Extracting ' + self.umbracoDownloadLocationFile + '...');
+
+		fs
+			.createReadStream(self.umbracoDownloadLocationFile)
+			.pipe(decompress({
+				'ext': 'application/zip',
+				'path': self.umbracoWebsiteWorkingDirectory
+			}))
+			.on('close', function () {
+				done();
+			});
 	}
 };
 
