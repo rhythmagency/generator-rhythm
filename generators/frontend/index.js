@@ -29,20 +29,27 @@ RhythmFrontendGenerator = function (args, options) {
 util.inherits(RhythmFrontendGenerator, yeoman.generators.Base);
 
 RhythmFrontendGenerator.prototype.install = function () {
+	this.log('Processing frontend directory...');
 	this._processDirectory('frontend', this.workingDirectory);
 
 	if (this.options.createPrototype) {
+		this.log('Processing frontend prototype directory...');
+
 		this._processDirectory('frontend', this.prototypeWorkingDirectory);
 	}
 };
 
 RhythmFrontendGenerator.prototype.installFrontendDeps = function () {
+	this.log('Installing frontend dependencies...');
+
 	process.chdir(this.workingDirectory);
 	this.installDependencies({'bower': false, 'npm': true});
 };
 
 RhythmFrontendGenerator.prototype.installFrontendPrototypeDeps = function () {
 	if (this.options.createPrototype) {
+		this.log('Installing frontend prototype dependencies...');
+
 		process.chdir(this.prototypeWorkingDirectory);
 		this.installDependencies({'bower': false, 'npm': true});
 	}

@@ -27,11 +27,15 @@ RhythmKeystoneGenerator = function (args, options) {
 util.inherits(RhythmKeystoneGenerator, yeoman.generators.Base);
 
 RhythmKeystoneGenerator.prototype.install = function () {
+	this.log('Processing keystone directory...');
+
 	this._processDirectory('keystone', this.workingDirectory);
 };
 
 RhythmKeystoneGenerator.prototype.installDeps = function () {
 	this.on('end', function () {
+		this.log('Installing keystone dependencies...');
+
 		process.chdir(this.workingDirectory);
 		this.installDependencies({'bower': false, 'npm': true});
 	});

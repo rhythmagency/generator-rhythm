@@ -70,11 +70,15 @@ RhythmUmbracoGenerator.prototype.downloadAndExtractUmbraco = function () {
 		self = this;
 
 	if (self.downloadUmbraco) {
+		this.log('Downloading Umbraco v' + this.umbracoVersion + '...');
+
 		self.fetch(self.umbracoDownloadLocation, self.umbracoWebsiteWorkingDirectory, function (err) {
 			if (err) {
 				self._logError('Error downloading ' + self.umbracoDownloadLocation, err);
 				done();
 			} else {
+				this.log('Extracting ' + self.umbracoDownloadLocationFile + '...');
+
 				fs
 					.createReadStream(self.umbracoDownloadLocationFile)
 					.pipe(decompress({

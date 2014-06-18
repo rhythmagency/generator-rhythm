@@ -164,12 +164,16 @@ RhythmGenerator.prototype.promptUser = function () {
 };
 
 RhythmGenerator.prototype.setupProjectStructure = function () {
+	this.log('Creating initial project structure...');
+
 	this.dest.mkdir(this.options.projectDomain);
 	this.directory('docs', path.join(this.options.projectDomain, 'docs'));
 	this.dest.mkdir(path.join(this.options.projectDomain, 'trunk'));
 };
 
 RhythmGenerator.prototype.invokeSubGenerators = function () {
+	this.log('Invoking subgenerators...');
+
 	var self = this,
 		done = this.async(),
 		fnInvokeGenerator = function (projectType) {
@@ -197,6 +201,8 @@ RhythmGenerator.prototype.invokeSubGenerators = function () {
 
 RhythmGenerator.prototype.invokeGit = function () {
 	if (this.options.useGit) {
+		this.log('Setting up git repository...');
+
 		var done = this.async(),
 			generator = this.invoke('rhythm:git', {'options': this.options});
 
@@ -208,6 +214,8 @@ RhythmGenerator.prototype.invokeGit = function () {
 
 RhythmGenerator.prototype.invokeBitbucket = function () {
 	if (this.options.useBitbucket) {
+		this.log('Setting up bitbucket remote repository...');
+
 		this.invoke('rhythm:bitbucket', {'options': this.options});
 	}
 };

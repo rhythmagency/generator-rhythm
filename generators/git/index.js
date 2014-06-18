@@ -24,6 +24,8 @@ RhythmGitGenerator = function (args, options) {
 util.inherits(RhythmGitGenerator, yeoman.generators.Base);
 
 RhythmGitGenerator.prototype.gitInit = function () {
+	this.log('Initializing git repository...');
+
 	var done = this.async();
 
 	git.init(this.workingDirectory, function (err, repo) {
@@ -38,6 +40,8 @@ RhythmGitGenerator.prototype.gitInit = function () {
 };
 
 RhythmGitGenerator.prototype.gitAdd = function () {
+	this.log('Adding files to git repository...');
+
 	var done = this.async();
 
 	this.repo.add('.', function (err) {
@@ -48,10 +52,12 @@ RhythmGitGenerator.prototype.gitAdd = function () {
 };
 
 RhythmGitGenerator.prototype.gitCommit = function () {
+	this.log('Committing files to git repository...');
+
 	/*
-		* This is going to error out: Error: stdout maxBuffer exceeded.
-		* node_modules/gift/lib/git.js : line 34
-		* add 'maxBuffer: 5000 * 1024' to fix, however it should be done with a pull request first.
+	 * This is going to error out: Error: stdout maxBuffer exceeded.
+	 * node_modules/gift/lib/git.js : line 34
+	 * add 'maxBuffer: 5000 * 1024' to fix, however it should be done with a pull request first.
 	 */
 
 	var done = this.async();
@@ -63,27 +69,13 @@ RhythmGitGenerator.prototype.gitCommit = function () {
 	}.bind(this));
 };
 
-RhythmGitGenerator.prototype.gitCreateBranchDevelop = function () {
-	var done = this.async();
+RhythmGitGenerator.prototype.gitCreateBranchDevelop = utils.createBranch('develop');
 
-	this.repo.create_branch('develop', function (err) {
-		this._logError('git:create_branch:develop:error', err);
-
-		done();
-	}.bind(this));
-};
-
-RhythmGitGenerator.prototype.gitCreateBranchFrontend = function () {
-	var done = this.async();
-
-	this.repo.create_branch('feature/frontend', function (err) {
-		this._logError('git:create_branch:frontend:error', err);
-
-		done();
-	}.bind(this));
-};
+RhythmGitGenerator.prototype.gitCreateBranchFrontend = utils.createBranch('feature/frontend');
 
 RhythmGitGenerator.prototype.gitCheckoutDevelop = function () {
+	this.log('Checking out develop branch from git repository...');
+
 	var done = this.async();
 
 	this.repo.checkout('develop', function (err) {

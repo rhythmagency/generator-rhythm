@@ -65,11 +65,14 @@ RhythmEmailTemplateGenerator.prototype.promptUser = function () {
 };
 
 RhythmEmailTemplateGenerator.prototype.install = function () {
+	this.log('Processing email template directory...');
+
 	this._processDirectory('email-template', this.workingDirectory);
 };
 
 RhythmEmailTemplateGenerator.prototype.installDeps = function () {
 	this.on('end', function () {
+		this.log('Installing email template dependencies...');
 		process.chdir(this.workingDirectory);
 		this.installDependencies();
 	});
