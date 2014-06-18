@@ -21,7 +21,7 @@ RhythmUmbracoGenerator = function (args, options) {
 	yeoman.generators.Base.apply(this, arguments);
 
 	this.options = options;
-	this.options.port = 90000;
+	this.options.port = 9000;
 	this.options.uuids = {
 		'website': {
 			'solution': uuid.v4(),
@@ -43,6 +43,8 @@ RhythmUmbracoGenerator = function (args, options) {
 	this.temporaryDirectory = os.tmpdir();
 	this.umbracoDownloadLocationFile = path.join(this.temporaryDirectory, this.umbracoFileName);
 	this.umbracoSolutionFile = path.join(this.workingDirectory, this.options.projectName + '.Website.sln');
+	this.umbracoExtensionsProjectFile = path.join(this.workingDirectory, this.options.projectName + '.Extensions', this.options.projectName + '.Extensions.csproj');
+	this.umbracoExtensionsAssembylyInfoFile = path.join(this.workingDirectory, this.options.projectName + '.Extensions', 'Properties', 'AssembyInfo.cs');
 };
 
 util.inherits(RhythmUmbracoGenerator, yeoman.generators.Base);
@@ -73,15 +75,10 @@ RhythmUmbracoGenerator.prototype.promptUser = function () {
 	});
 };
 
-RhythmUmbracoGenerator.prototype.replaceLineEndings = function () {
-	if (fs.existsSync(this.umbracoSolutionFile)) {
-		this.log('Replacing Umbraco solution line endings in ' + this.umbracoSolutionFile + '...');
-
-		var encoding = 'utf8',
-			contents = fs.readFileSync(this.umbracoSolutionFile, encoding).replace(/\r\n|\n/gim, '\r\n');
-
-		fs.writeFileSync(this.umbracoSolutionFile, contents, encoding);
-	}
+RhythmUmbracoGenerator.prototype.replaceLineEndingsInFiles = function () {
+	utils.replaceLineEndings(this.umbracoSolutionFile);
+	utils.replaceLineEndings(this.umbracoExtensionsProjectFile);
+	utils.replaceLineEndings(this.umbracoExtensionsAssembylyInfoFile);
 };
 
 RhythmUmbracoGenerator.prototype.downloadUmbracoFile = function () {
