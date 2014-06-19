@@ -1,6 +1,6 @@
 {
 	"name": "generator-rhythm",
-	"version": "0.1.13",
+	"version": "0.1.14",
 	"description": "Yeoman generator for Rhythm",
 	"license": "MIT",
 	"main": "./generators/app/index.js",
