@@ -24,13 +24,13 @@ RhythmUmbracoGenerator = function (args, options) {
 	this.options.port = 9000;
 	this.options.uuids = {
 		'website': {
-			'solution': uuid.v4(),
-			'project': uuid.v4()
+			'solution': uuid.v4().toUpperCase(),
+			'project': uuid.v4().toUpperCase()
 		},
 		'extensions': {
-			'solution': uuid.v4(),
-			'project': uuid.v4(),
-			'typelib': uuid.v4()
+			'solution': uuid.v4().toUpperCase(),
+			'project': uuid.v4().toUpperCase(),
+			'typelib': uuid.v4().toUpperCase()
 		}
 	};
 
