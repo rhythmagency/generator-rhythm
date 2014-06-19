@@ -44,7 +44,7 @@ RhythmUmbracoGenerator = function (args, options) {
 	this.umbracoDownloadLocationFile = path.join(this.temporaryDirectory, this.umbracoFileName);
 	this.umbracoSolutionFile = path.join(this.workingDirectory, this.options.projectName + '.Website.sln');
 	this.umbracoExtensionsProjectFile = path.join(this.workingDirectory, this.options.projectName + '.Extensions', this.options.projectName + '.Extensions.csproj');
-	this.umbracoExtensionsAssembylyInfoFile = path.join(this.workingDirectory, this.options.projectName + '.Extensions', 'Properties', 'AssembyInfo.cs');
+	this.umbracoExtensionsAssembylyInfoFile = path.join(this.workingDirectory, this.options.projectName + '.Extensions', 'Properties', 'AssemblyInfo.cs');
 };
 
 util.inherits(RhythmUmbracoGenerator, yeoman.generators.Base);
