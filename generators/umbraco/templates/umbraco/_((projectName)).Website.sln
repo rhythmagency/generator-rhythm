@@ -4,7 +4,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= options.projectName %>.Extensions", "<%= options.projectName %>.Extensions\<%= options.projectName %>.Extensions.csproj", "{<%= options.uuids.extensions.project %>}"
 EndProject
-Project("{<%= options.uuids.website.solution %>}") = "<%= options.projectName %>.Website", "http://localhost:<%= options.port %>", "{<%= options.uuids.website.project %>}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "<%= options.projectName %>.Website", "http://localhost:<%= options.port %>", "{<%= options.uuids.website.project %>}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"

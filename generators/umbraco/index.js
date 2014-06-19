@@ -24,7 +24,6 @@ RhythmUmbracoGenerator = function (args, options) {
 	this.options.port = 9000;
 	this.options.uuids = {
 		'website': {
-			'solution': uuid.v4().toUpperCase(),
 			'project': uuid.v4().toUpperCase()
 		},
 		'extensions': {
