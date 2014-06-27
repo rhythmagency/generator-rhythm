@@ -1,6 +1,6 @@
 # generator-rhythm [![Build Status](https://secure.travis-ci.org/rhythmagency/generator-rhythm.png?branch=master)](https://travis-ci.org/rhythmagency/generator-rhythm)
 
-> [Yeoman](http://yeoman.io) generator
+> [Yeoman](http://yeoman.io) generator for scaffolding projects at [Rhythm](http://rhythmagency.com)
 
 
 ## Getting Started
@@ -40,6 +40,17 @@ $ yo rhythm
 Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
 
 If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
+
+### Rhythm Generator
+
+The Rhythm Generator is used to scaffold out the typical project types we build here at Rhythm. Typical projects include:
+
+* Frontend Harp.js based projects
+* Umbraco based projects
+* Keystone.js based projects
+* Node.js based email template based projects
+
+In addition to scaffolding the project, the generator also has options for initializing the Git repository, creating branches ala GitFlow, and creating and pushing to a Bitbucket repository.
 
 
 ## License

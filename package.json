@@ -1,7 +1,7 @@
 {
 	"name": "generator-rhythm",
-	"version": "0.1.17",
-	"description": "Yeoman generator for Rhythm",
+	"version": "1.0.0",
+	"description": "Yeoman generator for scaffolding projects at Rhythm",
 	"license": "MIT",
 	"main": "./generators/app/index.js",
 	"repository": {
