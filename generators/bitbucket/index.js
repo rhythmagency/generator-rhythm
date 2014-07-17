@@ -4,7 +4,7 @@ var RhythmBitbucketGenerator,
 	util = require('util'),
 	path = require('path'),
 	yeoman = require('yeoman-generator'),
-	git = require('gift'),
+	git = require('rhythm.gift'),
 	utils = require('../../lib/utils'),
 	request = require('request');
 

@@ -43,7 +43,7 @@ RhythmFrontendGenerator.prototype.installFrontendDeps = function () {
 	this.log('Installing frontend dependencies...');
 
 	process.chdir(this.workingDirectory);
-	this.installDependencies({'bower': false, 'npm': true});
+	this.installDependencies({'bower': false, 'npm': true, 'skipInstall': !this.options.installDependencies});
 };
 
 RhythmFrontendGenerator.prototype.installFrontendPrototypeDeps = function () {
@@ -51,7 +51,13 @@ RhythmFrontendGenerator.prototype.installFrontendPrototypeDeps = function () {
 		this.log('Installing frontend prototype dependencies...');
 
 		process.chdir(this.prototypeWorkingDirectory);
-		this.installDependencies({'bower': false, 'npm': true});
+		this.installDependencies({'bower': false, 'npm': true, 'skipInstall': !this.options.installDependencies});
+	}
+};
+
+RhythmFrontendGenerator.prototype.emitComplete = function () {
+	if (!this.options.installDependencies) {
+		this.emit('complete');
 	}
 };
 

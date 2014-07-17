@@ -70,8 +70,7 @@ RhythmGenerator.prototype.promptUser = function () {
 				},
 				{
 					'name': 'Email Template',
-					'value': 'email-template',
-					'disabled': true
+					'value': 'email-template'
 				},
 				{
 					'name': 'Umbraco',
@@ -79,8 +78,7 @@ RhythmGenerator.prototype.promptUser = function () {
 				},
 				{
 					'name': 'Keystone.js',
-					'value': 'keystone',
-					'disabled': true
+					'value': 'keystone'
 				}
 			]
 		},
@@ -92,6 +90,12 @@ RhythmGenerator.prototype.promptUser = function () {
 			'when': function (response) {
 				return _.contains(response.projectTypes, 'frontend');
 			}
+		},
+		{
+			'type': 'confirm',
+			'name': 'installDependencies',
+			'message': 'Would you like to install the node dependencies?',
+			'default': true
 		},
 		{
 			'type': 'confirm',
