@@ -33,10 +33,10 @@ RhythmUmbracoGenerator = function (args, options) {
 		}
 	};
 
-	this.umbracoVersion = '7.1.4';
+	this.umbracoVersion = '7.2.1';
 	// Append '&filename=/umbraco.zip' so that we can have the file named umbraco.zip instead of 'ReleaseDownload?id=125627'. Kind of a hack, but it works.
 	this.umbracoFileName = 'umbraco-' + this.umbracoVersion + '.zip';
-	this.umbracoDownloadLocation = 'http://our.umbraco.org/ReleaseDownload?id=125627&filename=/' + this.umbracoFileName;
+	this.umbracoDownloadLocation = 'http://our.umbraco.org/ReleaseDownload?id=138040&filename=/' + this.umbracoFileName;
 	this.workingDirectory = path.join(process.cwd(), this.options.projectDomain, 'trunk', this.options.projectName + '.Umbraco');
 	this.umbracoWebsiteWorkingDirectory = path.join(this.workingDirectory, this.options.projectName + '.Website');
 	this.temporaryDirectory = os.tmpdir();
